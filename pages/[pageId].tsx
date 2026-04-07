@@ -25,6 +25,7 @@ export const getStaticProps: GetStaticProps<PageProps, Params> = async (
 }
 
 export async function getStaticPaths() {
+  // 开发环境保持原有行为，方便调试
   if (isDev) {
     return {
       paths: [],
@@ -32,24 +33,12 @@ export async function getStaticPaths() {
     }
   }
 
-  const siteMap = await getSiteMap()
-
-  // Combine sitemap paths with URL overrides (e.g., /articles, /notes)
-  // URL overrides might not be in the sitemap if not directly linked from root
-  const allPageIds = [
-    ...new Set([
-      ...Object.keys(siteMap.canonicalPageMap),
-      ...Object.keys(pageUrlOverrides)
-    ])
-  ]
-
-  const staticPaths = {
-    paths: allPageIds.map((pageId) => ({ params: { pageId } })),
-    fallback: true
+  // 生产环境：不再预先生成任何页面路径，全部按需生成（ISR）
+  // 这样可以避免构建时触发 Notion API 的 429 速率限制
+  return {
+    paths: [],           // 关键：空数组，构建时不生成任何页面
+    fallback: 'blocking' // 用户首次访问时实时生成页面，并缓存
   }
-
-  console.log(staticPaths.paths)
-  return staticPaths
 }
 
 export default function NotionDomainDynamicPage(props: PageProps) {
