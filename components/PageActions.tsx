@@ -10,23 +10,8 @@ export function PageActions({ tweet }: { tweet: string }) {
   return (
     <div className={styles.pageActions}>
       <a
-        className={styles.likeTweet}
-        href={`https://x.com/intent/like?tweet_id=${tweet}`}
-        target='_blank'
-        rel='noopener noreferrer'
-        title='Like this post on Twitter'
+        href='#'
       >
-        <LikeIcon />
-      </a>
-
-      <a
-        className={styles.retweet}
-        href={`https://x.com/intent/retweet?tweet_id=${tweet}`}
-        target='_blank'
-        rel='noopener noreferrer'
-        title='Retweet this post on Twitter'
-      >
-        <RetweetIcon />
       </a>
     </div>
   )
