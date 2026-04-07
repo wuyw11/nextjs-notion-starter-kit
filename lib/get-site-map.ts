@@ -32,12 +32,14 @@ const getAllPages = pMemoize(getAllPagesImpl, {
 
 const getPage = async (pageId: string, opts?: any) => {
   console.log('\nnotion getPage', uuidToId(pageId))
-  return notion.getPage(pageId, {
+  const result = await notion.getPage(pageId, {
     kyOptions: {
       timeout: 30_000
     },
     ...opts
   })
+  await new Promise(resolve => setTimeout(resolve, 300))
+  return result
 }
 
 async function getAllPagesImpl(
