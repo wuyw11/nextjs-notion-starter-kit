@@ -1,6 +1,6 @@
 import { NotionAPI } from 'notion-client'
 
 export const notion = new NotionAPI({
-  token: process.env.NOTION_TOKEN,
+  authToken: process.env.NOTION_TOKEN,
   apiBaseUrl: process.env.NOTION_API_BASE_URL
 })
